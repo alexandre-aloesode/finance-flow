@@ -1,4 +1,6 @@
 <?php
+ header("Access-Control-Allow-Origin: *");
+
 echo "hello";
 
 $db = "mysql:host=localhost;dbname=finance-flow";
@@ -20,5 +22,5 @@ $request->execute();
 $response = $request->fetchAll();
 
 
-echo $response;
+echo json_encode($response);
 ?>

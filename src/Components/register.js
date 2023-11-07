@@ -2,7 +2,15 @@ import React from 'react';
 
 export default function Register(){
 
-fetch('http://localhost:3000/back/register.php').then(response=>{console.log(response)})
+  const fetchParams = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  fetch('http://localhost:80/finance-flow/back/register.php').then(response=>{console.log(response)})
+// fetch('/var/www/html/finance-flow/back/register.php', fetchParams).then(response=>{console.log(response)})
+// fetch('../back/register.php', fetchParams).then(response=>{console.log(response)})
 
 return(
     <div>
