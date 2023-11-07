@@ -26,8 +26,8 @@ async function handleSubmit(){
     body:registerForm
   };
  const req = await fetch('http://localhost:80/finance-flow/back/register.php',fetchParams)
-const tarace = await req.json()
-console.log("testtarae",tarace)
+ const tarace = await req.json()
+ console.log("testtarae",tarace)
 }
 return(
     <div>
