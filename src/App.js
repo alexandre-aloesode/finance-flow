@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import Register from "./Components/register";
+import Login from "./Components/login";
+import Budget from "./Components/budget";
+import { useState } from "react";
 
 function App() {
+  const [isConnected, setIsConnected] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {isConnected == false ? (
+        <div>
+          <p>Login</p>
+          <Register />
+          <br></br>
+          <p>Login</p>
+          <Login connect={setIsConnected} />
+        </div>
+      ) : (
+        <div>
+          <Budget />
+        </div>
+      )}
     </div>
   );
 }

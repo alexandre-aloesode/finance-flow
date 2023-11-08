@@ -21,8 +21,18 @@ try {
 $request = $db->prepare('SELECT * from users WHERE mail= :mail');
 $request->bindParam(':mail', $_POST['mail']);
 $request->execute();
-$response = $request->fetchAll();
+$response = $request->fetchAll(PDO::FETCH_ASSOC);
 
+if(count($response)>0){
 
-echo json_encode($response);
+   if(password_verify($_POST['password'], $response[0]['password'])){
+
+       echo json_encode(['success'=>true, "userId"=> $response[0]['id']]);
+   }else{
+    echo json_encode(['success'=>false]);
+}
+}else{
+    echo json_encode(['success'=>false]);
+}
+
 ?>

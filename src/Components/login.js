@@ -2,9 +2,10 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
-export default function Login() {
+export default function Login(params) {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  
 
 async function handleSubmit(){
   const loginData = new FormData();
@@ -18,11 +19,19 @@ async function handleSubmit(){
     body:loginData
   };
  const req = await fetch('http://localhost:80/finance-flow/back/login.php',fetchParams)
- const tarace = await req.json()
+ const response = await req.json()
+
+ if(response.success == true){
+   localStorage.setItem('token', mail)
+   localStorage.setItem('userId', response.userId)
+   params.connect(true);
+ }
 }
-  useEffect(()=>{
-    console.log("test",mail)
-  },[mail])
+  // useEffect(()=>{
+  //   if(params.isConneted == true){
+  //     window.location.href= "/budget.js"
+  //   }
+  // },[isConneted])
 
   return (
     <div>
