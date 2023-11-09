@@ -9,7 +9,7 @@ function App() {
   const [isConnected, setIsConnected] = useState(false);
   return (
     <div>
-      {isConnected == false ? (
+      {isConnected == false && localStorage.getItem('token') == "" ? (
         <div>
           <p>Login</p>
           <Register />
@@ -19,7 +19,7 @@ function App() {
         </div>
       ) : (
         <div>
-          <Budget />
+          <Budget connect={setIsConnected}/>
         </div>
       )}
     </div>

@@ -21,8 +21,8 @@ $request->execute([
     'description' => $_POST['description'],
     'amount' => $_POST['amount'],
     'id_user' => $_POST['id_user'],
-    'id_cat' => 1,
-    'id_sub_cat' => 2,
+    'id_cat' => $_POST['type'],
+    'id_sub_cat' => $_POST['subCat'],
 ]);
 echo json_encode(["success" => true]);
 } catch(PDOException $e) {
