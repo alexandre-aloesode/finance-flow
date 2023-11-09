@@ -2,6 +2,10 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import CloseIcon from '@mui/icons-material/Close';
 import React from "react";
 import { useState, useEffect } from "react";
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 
 export default function Budget(params) {
   const [addTransaction, setAddTransaction] = useState(false);
@@ -146,7 +150,19 @@ async function getSubCats(){
           setAddTransaction(false);
         }}/>
           <form>
-            <select
+          <Select
+          //labelId="demo-simple-select-label"
+          //id="demo-simple-select"
+          value={type}
+          label="Catégories"
+          onChange={(e) => {
+            setType(e.target.value)}}
+        >
+          {/* <MenuItem>Catégories</MenuItem> */}
+          <MenuItem value={1}>Débit</MenuItem>
+          <MenuItem value={2}>Crédit</MenuItem>
+        </Select>
+            {/* <select
               value={type}
               onChange={(e) => {
                 setType(e.target.value);
@@ -157,39 +173,39 @@ async function getSubCats(){
               <option>Catégories</option>
               <option value={2}>Crédit</option>
               <option value={1}>Débit</option>
-            </select>
-            <input
+            </select> */}
+            <TextField  variant ="outlined"
               type="text"
-              placeholder="Titre"
+              label="Titre"
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
-            ></input>
-            <input
+            />
+            <TextField
               type="number"
-              placeholder="Montant"
+              label="Montant"
               value={amount}
               onChange={(e) => {
                 setAmount(e.target.value);
               }}
-            ></input>
-            <input
+            />
+            <TextField
               type="text"
-              placeholder="Description"
+              label="Description"
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
-            ></input>
-            <input
+            />
+            <TextField
               type="text"
-              placeholder="Lieu"
+              label="Lieu"
               value={location}
               onChange={(e) => {
                 setLocation(e.target.value);
               }}
-            ></input>
+            />
             <select
               value={subCat}
               onChange={(e) => {
