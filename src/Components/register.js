@@ -39,7 +39,13 @@ export default function Register(params) {
   // }, [repeatPassword]);
 
   return (
-    <div>
+    <div
+      // style={{
+      //   WebkitTransition: "width 2s, height 2s, background-color 2s",
+      //   WebkitTransform: "rotate(0deg)",
+      //   transition: "width 2s, height 2s, background-color 2s",
+      // }}
+    >
       <form>
         <TextField
           type="text"
