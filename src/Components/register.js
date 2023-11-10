@@ -14,6 +14,7 @@ export default function Register(params) {
 
   async function handleSubmit() {
     if(existingMail == true) return;
+    if(passwordMatch == false) return;
     if (password != repeatPassword) return;
     const registerForm = new FormData();
     registerForm.append("lastname", lastname);
