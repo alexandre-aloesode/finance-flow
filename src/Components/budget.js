@@ -78,7 +78,7 @@ export default function Budget(params) {
     }
   }
 
-  if (userBudget.length == 0) getBudget();
+  if (userBudget?.length == 0) getBudget();
 
   useEffect(() => {
     getSubCats();
