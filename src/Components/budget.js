@@ -1,10 +1,13 @@
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import { useState, useEffect } from "react";
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Button from '@mui/material/Button';
 
 
 export default function Budget(params) {
@@ -16,7 +19,7 @@ export default function Budget(params) {
   const [subCat, setSubCat] = useState("");
   const [amount, setAmount] = useState("");
   const [userBudget, setUserBudget] = useState([]);
-  const [balance, setBalance] = useState(0)
+  const [balance, setBalance] = useState(0);
   const [allSubCat, setAllSubCat] = useState([]);
 
   async function getBudget() {
@@ -33,13 +36,13 @@ export default function Budget(params) {
     );
     const response = await req.json();
     setUserBudget(response.data);
-    setBalance(response.amountIncomes - response.amountExpenses)
+    setBalance(response.amountIncomes - response.amountExpenses);
   }
 
   function handleLogOut() {
-    localStorage.setItem("token", "")
-    localStorage.setItem("userId", "")
-    params.connect(false)
+    localStorage.setItem("token", "");
+    localStorage.setItem("userId", "");
+    params.connect(false);
   }
 
   async function handleSubmit() {
@@ -78,53 +81,53 @@ export default function Budget(params) {
   if (userBudget.length == 0) getBudget();
 
   useEffect(() => {
-    // if(addTransaction == false){
-    //   getBudget();
-    // }
-    // console.log("userBudget", subCat);
-    getSubCats()
+    getSubCats();
   }, [type]);
 
-// function calculateBalance(){
+  // function calculateBalance(){
 
-//   let temporaryBudget = 0
-//   userBudget?.map((transaction) => {
-//     if(transaction.id_cat == 1){
-//       temporaryBudget =   parseInt(temporaryBudget) - parseInt(transaction.amount)
-//     }else{
-//       temporaryBudget = parseInt(temporaryBudget) + parseInt(transaction.amount)
-//     }
-//   })
-//   setBalance(temporaryBudget)
-// }
+  //   let temporaryBudget = 0
+  //   userBudget?.map((transaction) => {
+  //     if(transaction.id_cat == 1){
+  //       temporaryBudget =   parseInt(temporaryBudget) - parseInt(transaction.amount)
+  //     }else{
+  //       temporaryBudget = parseInt(temporaryBudget) + parseInt(transaction.amount)
+  //     }
+  //   })
+  //   setBalance(temporaryBudget)
+  // }
 
-async function getSubCats(){
-  const transactionData = new FormData();
-  transactionData.append("type", type);
- 
-  const fetchParams = {
-    method: "POST",
-    // headers: {
-    //   'Content-Type': 'multipart/form-data',
-    // },
-    body: transactionData,
-  };
-  const req = await fetch(
-    "http://localhost:80/finance-flow/back/getSubCat.php",
-    fetchParams
-  );
-  const response = await req.json();
+  async function getSubCats() {
+    const transactionData = new FormData();
+    transactionData.append("type", type);
 
-  if (response.success == true) {
-    setAllSubCat(response.data)
+    const fetchParams = {
+      method: "POST",
+      // headers: {
+      //   'Content-Type': 'multipart/form-data',
+      // },
+      body: transactionData,
+    };
+    const req = await fetch(
+      "http://localhost:80/finance-flow/back/getSubCat.php",
+      fetchParams
+    );
+    const response = await req.json();
+
+    if (response.success == true) {
+      setAllSubCat(response.data);
+    }
   }
-}
 
   return (
     <div>
-     
-
-      <button onClick = {() => {handleLogOut()}}>Déconnexion</button>
+      <button
+        onClick={() => {
+          handleLogOut();
+        }}
+      >
+        Déconnexion
+      </button>
       <p>Budget de {localStorage.getItem("token")}</p>
       {/* <button
         onClick={() => {
@@ -145,36 +148,32 @@ async function getSubCats(){
       </div>
 
       {addTransaction == true ? (
-        <div style={{border:"solid 1px black"}}>
-          <CloseIcon onClick={() => {
-          setAddTransaction(false);
-        }}/>
-          <form>
-          <Select
-          //labelId="demo-simple-select-label"
-          //id="demo-simple-select"
-          value={type}
-          label="Catégories"
-          onChange={(e) => {
-            setType(e.target.value)}}
-        >
-          {/* <MenuItem>Catégories</MenuItem> */}
-          <MenuItem value={1}>Débit</MenuItem>
-          <MenuItem value={2}>Crédit</MenuItem>
-        </Select>
-            {/* <select
+        <div style={{ border: "solid 1px black" }}>
+          <FormControl>
+          <CloseIcon
+            onClick={() => {
+              setAddTransaction(false);
+            }}
+          />
+          <FormControl>
+            <InputLabel id="inputCat">Catégorie</InputLabel>
+            <Select
+              labelId="inputCat"
+              id="inputCat"
               value={type}
+              label="Catégorie"
               onChange={(e) => {
                 setType(e.target.value);
-                // getSubCats()
-                console.log("test",e.target.value );
               }}
+              // style={{width:'200px'}}
             >
-              <option>Catégories</option>
-              <option value={2}>Crédit</option>
-              <option value={1}>Débit</option>
-            </select> */}
-            <TextField  variant ="outlined"
+              <MenuItem>Catégories</MenuItem>
+              <MenuItem value={1}>Débit</MenuItem>
+              <MenuItem value={2}>Crédit</MenuItem>
+            </Select>
+            </FormControl>
+            <TextField
+              variant="outlined"
               type="text"
               label="Titre"
               value={title}
@@ -206,22 +205,27 @@ async function getSubCats(){
                 setLocation(e.target.value);
               }}
             />
-            <select
+            <FormControl>
+            <InputLabel id="inputSubCat">Sous-catégorie</InputLabel>
+            <Select
+              labelId="inputSubCat"
+              id="inputSubCat"
               value={subCat}
+              label="Sous-catégorie"
               onChange={(e) => {
                 setSubCat(e.target.value);
               }}
             >
-                 {allSubCat?.map((subCat) => {
-            return (
-              <>
-                <option>Sous-catégories</option>
-                <option value= {subCat.id}>{subCat.name}</option>
-              </>
-            );
-          })}
-            </select>
-            <button
+              <MenuItem value={"all"}>Sous-catégories</MenuItem>
+              {allSubCat?.map((subCat) => {     
+           return (
+             <MenuItem value={subCat.id}>{subCat.name}</MenuItem>   
+           )
+                 
+              })}
+            </Select>
+            </FormControl>
+            <Button variant="contained"
               type="submit"
               className="submit"
               onClick={(e) => {
@@ -230,18 +234,25 @@ async function getSubCats(){
               }}
             >
               Ajouter
-            </button>
-          </form>
+            </Button>
+            </FormControl>
         </div>
       ) : (
-        <div style={{border:"solid 1px black"}}>  
+        <div style={{ border: "solid 1px black" }}>
           {userBudget?.map((transaction) => {
             return (
-              <div style={{display:"flex", color: transaction.id_cat == 1 ? "red" : "green"}}>
+              <div
+                style={{
+                  display: "flex",
+                  color: transaction.id_cat == 1 ? "red" : "green",
+                }}
+              >
                 <p>{transaction.title}</p>
                 <p>{transaction.subCat}</p>
                 <p>{transaction.amount}€</p>
-                <p>Le {transaction.date} à {transaction.location}</p>
+                <p>
+                  Le {transaction.date} à {transaction.location}
+                </p>
                 <p>{transaction.description}</p>
               </div>
             );

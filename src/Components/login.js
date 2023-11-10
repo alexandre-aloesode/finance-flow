@@ -1,6 +1,7 @@
 import React from "react";
-
 import { useState, useEffect } from "react";
+import TextField from "@mui/material/TextField";
+import Button from '@mui/material/Button'
 
 export default function Login(params) {
   const [mail, setMail] = useState("");
@@ -36,31 +37,30 @@ async function handleSubmit(){
   return (
     <div>
       <form>
-        <input
+        <TextField
           type="mail"
+          label="Mail"
           className="mail"
-          value={mail}
-          placeholder="Entre votre email"
           onChange={(e) => {
             setMail(e.target.value);
           }}
-        ></input>
-        <input
+        />
+        <TextField
           type="password"
+          label="Mot de passe"
           className="password"
           value={password}
-          placeholder="Mot de passe"
           onChange={(e) => {
             setPassword(e.target.value);
           }}
-        ></input>
-        <button type="submit" className="submit" onClick = {(e)=>{
+        />
+        <Button type="submit" variant="outlined" size="medium"className="submit" onClick = {(e)=>{
           e.preventDefault();
           handleSubmit();
         }
 }>
           Connexion
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import TextField from "@mui/material/TextField";
+import Button from '@mui/material/Button'
 
 export default function Register(){
 
@@ -32,24 +34,24 @@ async function handleSubmit(){
 return(
     <div>
       <form>
-        <input type ="text" value= {lastname} className="lastname" placeholder="Entrez votre Nom" onChange={(e)=>{
+        <TextField type ="text"  label="Nom" value= {lastname}  variant="outlined" className="lastname"  onChange={(e)=>{
           setLastname(e.target.value);
-          }}></input>
-        <input type="text" value={firstname} className="firstname" placeholder="Entrez votre Prénom" onChange={(e)=>{
+          }}/>
+        <TextField type="text" label="Prénom"value={firstname} className="firstname"  onChange={(e)=>{
           setFirstname(e.target.value);
-          }}></input>
-        <input type="mail" value={mail}className="mail" placeholder="Entre votre email"onChange={(e)=>{
+          }}/>
+        <TextField type="mail" label="Mail"value={mail}className="mail"onChange={(e)=>{
           setMail(e.target.value);
-          }}></input>
-        <input type="password" value={password} className="password" placeholder="Mot de passe"onChange={(e)=>{
+          }}/>
+        <TextField type="password" label="Mot de passe"value={password} className="password" onChange={(e)=>{
           setPassword(e.target.value);
-          }}></input>
-        <input type="password" value={repeatPassword} className="repeat-password" placeholder="Confirmer votre mot de passe"onChange={(e)=>{
+          }}/>
+        <TextField type="password" label="Confirmation du mot de passe"value={repeatPassword} className="repeat-password"onChange={(e)=>{
           setRepeatPpassword(e.target.value);
-          }}></input>
-        <button type="submit"  className="submit" onClick={(e)=>{
+          }}/>
+        <Button type="submit" variant="contained" className="submit" onClick={(e)=>{
           e.preventDefault();
-          handleSubmit()}} >Inscription</button>
+          handleSubmit()}} >Inscription</Button>
       </form>
     </div>
 
