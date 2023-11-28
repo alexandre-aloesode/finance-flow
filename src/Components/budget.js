@@ -8,6 +8,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Button from '@mui/material/Button';
+import Containers from "./style/containerStyle";
+import Components from "./style/componentStyle";
 
 
 export default function Budget(params) {
@@ -19,7 +21,6 @@ export default function Budget(params) {
   const [subCat, setSubCat] = useState("");
   const [amount, setAmount] = useState("");
   const [userBudget, setUserBudget] = useState([]);
-  const [balance, setBalance] = useState(0);
   const [allSubCat, setAllSubCat] = useState([]);
 
   async function getBudget() {
@@ -36,7 +37,6 @@ export default function Budget(params) {
     );
     const response = await req.json();
     setUserBudget(response.data);
-    setBalance(response.amountIncomes - response.amountExpenses);
   }
 
   function handleLogOut() {
@@ -57,9 +57,6 @@ export default function Budget(params) {
 
     const fetchParams = {
       method: "POST",
-      // headers: {
-      //   'Content-Type': 'multipart/form-data',
-      // },
       body: transactionData,
     };
     const req = await fetch(
@@ -84,28 +81,12 @@ export default function Budget(params) {
     getSubCats();
   }, [type]);
 
-  // function calculateBalance(){
-
-  //   let temporaryBudget = 0
-  //   userBudget?.map((transaction) => {
-  //     if(transaction.id_cat == 1){
-  //       temporaryBudget =   parseInt(temporaryBudget) - parseInt(transaction.amount)
-  //     }else{
-  //       temporaryBudget = parseInt(temporaryBudget) + parseInt(transaction.amount)
-  //     }
-  //   })
-  //   setBalance(temporaryBudget)
-  // }
-
   async function getSubCats() {
     const transactionData = new FormData();
     transactionData.append("type", type);
 
     const fetchParams = {
       method: "POST",
-      // headers: {
-      //   'Content-Type': 'multipart/form-data',
-      // },
       body: transactionData,
     };
     const req = await fetch(
@@ -142,10 +123,6 @@ export default function Budget(params) {
           setAddTransaction(true);
         }}
       />
-
-      <div>
-        <p>Solde:{balance}</p>
-      </div>
 
       {addTransaction == true ? (
         <div style={{ border: "solid 1px black" }}>

@@ -18,17 +18,8 @@ try {
     ]);
     $response = $request->fetchAll(PDO::FETCH_ASSOC);
 
-    $reqExpenses = $db->prepare('SELECT SUM(amount) from transactions WHERE id_cat= "1"' );
-    $reqExpenses->execute();
-    $responseExpenses = $reqExpenses->fetchAll();
-
-    $reqIncomes = $db->prepare('SELECT SUM(amount) from transactions WHERE id_cat= "2"' );
-    $reqIncomes->execute();
-    $responseIncomes = $reqIncomes->fetchAll();
-
     if (count($response) > 0) {
-
-        echo json_encode(['success' => true, "data" => $response, "amountExpenses" => $responseExpenses[0][0], "amountIncomes" => $responseIncomes[0][0]]);
+        echo json_encode(['success' => true, "data" => $response]);
     } else {
         echo json_encode(['success' => false]);
     }

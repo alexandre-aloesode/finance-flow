@@ -2,11 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button'
+import Components from "./style/componentStyle";
 
 export default function Login(params) {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
-  
+  const styles = Components();
+
 
 async function handleSubmit(){
   const loginData = new FormData();
@@ -26,6 +28,7 @@ async function handleSubmit(){
    localStorage.setItem('token', mail)
    localStorage.setItem('userId', response.userId)
    params.connect(true);
+   console.log(params.connect);
  }
 }
   // useEffect(()=>{
@@ -35,9 +38,8 @@ async function handleSubmit(){
   // },[isConneted])
 
   return (
-    <div>
-      <form>
-        <TextField
+      <form style={styles.form}>
+        <TextField sx={styles.textField} variant="filled"
           type="mail"
           label="Mail"
           className="mail"
@@ -45,7 +47,7 @@ async function handleSubmit(){
             setMail(e.target.value);
           }}
         />
-        <TextField
+        <TextField sx={styles.textField} variant="filled"
           type="password"
           label="Mot de passe"
           className="password"
@@ -59,9 +61,8 @@ async function handleSubmit(){
           handleSubmit();
         }
 }>
-          Connexion
+          Se connecter
         </Button>
       </form>
-    </div>
   );
 }

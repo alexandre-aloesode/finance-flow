@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Components from "./style/componentStyle";
 
 export default function Register(params) {
   const [lastname, setLastname] = useState("");
@@ -11,10 +12,12 @@ export default function Register(params) {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [existingMail, setExistingMail] = useState(false);
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const styles = Components();
+
 
   async function handleSubmit() {
-    if(existingMail == true) return;
-    if(passwordMatch == false) return;
+    if (existingMail == true) return;
+    if (passwordMatch == false) return;
     if (password != repeatPassword) return;
     const registerForm = new FormData();
     registerForm.append("lastname", lastname);
@@ -59,11 +62,10 @@ export default function Register(params) {
   }
 
   async function checkPasswordMatch() {
-    if(password == "" || repeatPassword == "") return;
-    if(password != repeatPassword){
+    if (password == "" || repeatPassword == "") return;
+    if (password != repeatPassword) {
       setPasswordMatch(false);
-    }
-    else{
+    } else {
       setPasswordMatch(true);
     }
   }
@@ -77,25 +79,21 @@ export default function Register(params) {
   }, [repeatPassword]);
 
   return (
-    <div
-    // style={{
-    //   WebkitTransition: "width 2s, height 2s, background-color 2s",
-    //   WebkitTransform: "rotate(0deg)",
-    //   transition: "width 2s, height 2s, background-color 2s",
-    // }}
-    >
-      <form>
+      <form style={styles.form}>
         <TextField
+          variant="filled"
+          sx={styles.textField}
           type="text"
           label="Nom"
           value={lastname}
-          variant="outlined"
           className="lastname"
           onChange={(e) => {
             setLastname(e.target.value);
           }}
         />
         <TextField
+          variant="filled"
+          sx={styles.textField}
           type="text"
           label="Prénom"
           value={firstname}
@@ -105,16 +103,20 @@ export default function Register(params) {
           }}
         />
         <TextField
+          variant="filled"
+          sx={styles.textField}
           type="mail"
-          label= {existingMail == true ? "Mail déjà utilisé" : "Mail"}
+          label={existingMail == true ? "Mail déjà utilisé" : "Mail"}
           value={mail}
           className="mail"
           onChange={(e) => {
             setMail(e.target.value);
           }}
-          color= {existingMail == true ? "warning" : "success"}
-          />
+          color={existingMail == true ? "warning" : "success"}
+        />
         <TextField
+          variant="filled"
+          sx={styles.textField}
           type="password"
           label="Mot de passe"
           value={password}
@@ -124,9 +126,11 @@ export default function Register(params) {
           }}
         />
         <TextField
+          variant="filled"
+          sx={styles.textField}
           type="password"
-          label= {passwordMatch == false ? "Les Mots de passe ne correspondent pas" : "Confirmer le mot de passe"}
-          color= {passwordMatch == false ? "warning" : "success"}
+          label={passwordMatch == false ? "Les Mots de passe ne correspondent pas" : "Confirmer le mot de passe"}
+          color={passwordMatch == false ? "warning" : "success"}
           value={repeatPassword}
           className="repeat-password"
           onChange={(e) => {
@@ -142,9 +146,8 @@ export default function Register(params) {
             handleSubmit();
           }}
         >
-          Inscription
+          S'inscrire
         </Button>
       </form>
-    </div>
   );
 }
