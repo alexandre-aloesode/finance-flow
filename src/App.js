@@ -5,14 +5,18 @@ import Budget from "./Components/budget";
 import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import ImageOrGraph from "./Components/image_graph";
+import AddTransaction from "./Components/addTransaction";
 import Components from "./Components/style/componentStyle";
-// import Containers from "./Components/style/containerStyle";
+import Containers from "./Components/style/containerStyle";
+import Header from "./Components/nav";
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [registerForm, setRegisterForm] = useState(false);
   const [loginForm, setLoginForm] = useState(false);
+  const [addTransaction, setAddTransaction] = useState(false);
   const styles = Components();
+  const divStyles = Containers();
 
 useEffect(()=>{
   if(localStorage.getItem('token') != ""){
@@ -21,24 +25,16 @@ useEffect(()=>{
 },[isConnected])
 
   return (
-    <div style={{ height: "100vh", width: "100vw", display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <div style={{ height: "40%", width: "50%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div style={divStyles.indexContainer}>
+      {isConnected == true && (<Header connect={setIsConnected} />)}
+      {addTransaction == false && (
+        <div style={divStyles.appGraphsContainer}>
         <ImageOrGraph isConnected={isConnected} />
       </div>
-
+      )}
       {isConnected == false && !localStorage.getItem("token") && (
         <div
-          style={{
-            height: "60%",
-            width: "100%",
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "5rem",
-            background: isConnected ? "#fff" : "#353890",
-            position: "relative",
-          }}
+          style={divStyles.appCredentialsContainer}
         >
           <Button
             sx={styles.registerButton}
@@ -73,7 +69,8 @@ useEffect(()=>{
         </div>
       )}
 
-      {isConnected === true && <Budget connect={setIsConnected} />}
+      {isConnected === true && addTransaction === false && <Budget addTransaction={setAddTransaction} />}
+      {isConnected === true && addTransaction === true && <AddTransaction addTransaction={setAddTransaction} />}
     </div>
   );
 }

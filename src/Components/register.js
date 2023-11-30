@@ -14,7 +14,6 @@ export default function Register(params) {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const styles = Components();
 
-
   async function handleSubmit() {
     if (existingMail == true) return;
     if (passwordMatch == false) return;
@@ -79,75 +78,81 @@ export default function Register(params) {
   }, [repeatPassword]);
 
   return (
-      <form style={styles.form}>
-        <TextField
-          variant="filled"
-          sx={styles.textField}
-          type="text"
-          label="Nom"
-          value={lastname}
-          className="lastname"
-          onChange={(e) => {
-            setLastname(e.target.value);
-          }}
-        />
-        <TextField
-          variant="filled"
-          sx={styles.textField}
-          type="text"
-          label="Prénom"
-          value={firstname}
-          className="firstname"
-          onChange={(e) => {
-            setFirstname(e.target.value);
-          }}
-        />
-        <TextField
-          variant="filled"
-          sx={styles.textField}
-          type="mail"
-          label={existingMail == true ? "Mail déjà utilisé" : "Mail"}
-          value={mail}
-          className="mail"
-          onChange={(e) => {
-            setMail(e.target.value);
-          }}
-          color={existingMail == true ? "warning" : "success"}
-        />
-        <TextField
-          variant="filled"
-          sx={styles.textField}
-          type="password"
-          label="Mot de passe"
-          value={password}
-          className="password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <TextField
-          variant="filled"
-          sx={styles.textField}
-          type="password"
-          label={passwordMatch == false ? "Les Mots de passe ne correspondent pas" : "Confirmer le mot de passe"}
-          color={passwordMatch == false ? "warning" : "success"}
-          value={repeatPassword}
-          className="repeat-password"
-          onChange={(e) => {
-            setRepeatPassword(e.target.value);
-          }}
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          className="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-        >
-          S'inscrire
-        </Button>
-      </form>
+    <form style={styles.form}>
+      <TextField
+        // hiddenLabel = {window.innerHeight < 850 ? true : false}
+        size={window.innerHeight < 850 ? "small" : "normal"}
+        variant="filled"
+        sx={styles.textField}
+        type="text"
+        label="Nom"
+        value={lastname}
+        className="lastname"
+        onChange={(e) => {
+          setLastname(e.target.value);
+        }}
+      />
+      <TextField
+        size={window.innerHeight < 700 ? "small" : "normal"}
+        variant="filled"
+        sx={styles.textField}
+        type="text"
+        label="Prénom"
+        value={firstname}
+        className="firstname"
+        onChange={(e) => {
+          setFirstname(e.target.value);
+        }}
+      />
+      <TextField
+        size={window.innerHeight < 700 ? "small" : "normal"}
+        variant="filled"
+        sx={styles.textField}
+        type="mail"
+        label={existingMail == true ? "Mail déjà utilisé" : "Mail"}
+        value={mail}
+        className="mail"
+        onChange={(e) => {
+          setMail(e.target.value);
+        }}
+        color={existingMail == true ? "warning" : "success"}
+      />
+      <TextField
+        size={window.innerHeight < 700 ? "small" : "normal"}
+        variant="filled"
+        sx={styles.textField}
+        type="password"
+        label="Mot de passe"
+        value={password}
+        className="password"
+        onChange={(e) => {
+          setPassword(e.target.value);
+        }}
+      />
+      <TextField
+        size={window.innerHeight < 700 ? "small" : "normal"}
+        variant="filled"
+        sx={styles.textField}
+        type="password"
+        label={passwordMatch == false ? "Les Mots de passe ne correspondent pas" : "Confirmer le mot de passe"}
+        color={passwordMatch == false ? "warning" : "success"}
+        value={repeatPassword}
+        className="repeat-password"
+        onChange={(e) => {
+          setRepeatPassword(e.target.value);
+        }}
+      />
+      <Button sx={styles.formButton}
+        type="submit"
+        variant="contained"
+        className="submit"
+        onClick={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        S'inscrire
+      </Button>
+    </form>
   );
 }

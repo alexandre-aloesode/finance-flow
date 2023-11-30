@@ -12,10 +12,29 @@ $password = "";
 try {
     $db = new PDO($db, $host, $password);
 
-    $request = $db->prepare('SELECT * from transactions WHERE id_user= :id_user ORDER BY id DESC' );
-    $request->execute([
-        "id_user" => $_POST['id_user']
-    ]);
+    if (isset($_POST['limit'])) {
+        $limit = (int)$_POST['limit'];
+        $request = $db->prepare('SELECT * from transactions WHERE id_user= :id_user ORDER BY id DESC LIMIT 5');
+        $request->execute([
+            'id_user' => $_POST['id_user'],
+            // 'limit' => 2
+        ]);
+    }
+    else if (isset($_POST['start_date']) && isset($_POST['end_date'])) {
+        $request = $db->prepare('SELECT * from transactions WHERE id_user= :id_user AND date BETWEEN :start_date AND :end_date ORDER BY id DESC');
+        $request->execute([
+            'id_user' => $_POST['id_user'],
+            'start_date' => $_POST['start_date'],
+            'end_date' => $_POST['end_date']
+        ]);
+    }
+    else {
+        $request = $db->prepare('SELECT * from transactions WHERE id_user= :id_user ORDER BY id DESC');
+        $request->execute([
+            'id_user' => $_POST['id_user']
+        ]);
+    }
+
     $response = $request->fetchAll(PDO::FETCH_ASSOC);
 
     if (count($response) > 0) {

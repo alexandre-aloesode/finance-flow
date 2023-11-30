@@ -9,16 +9,12 @@ export default function Login(params) {
   const [password, setPassword] = useState("");
   const styles = Components();
 
-
 async function handleSubmit(){
   const loginData = new FormData();
   loginData.append("mail", mail )
   loginData.append("password", password)
   const fetchParams = {
     method: 'POST',
-    // headers: {
-    //   'Content-Type': 'multipart/form-data',
-    // },
     body:loginData
   };
  const req = await fetch('http://localhost:80/finance-flow/back/login.php',fetchParams)
@@ -28,7 +24,6 @@ async function handleSubmit(){
    localStorage.setItem('token', mail)
    localStorage.setItem('userId', response.userId)
    params.connect(true);
-   console.log(params.connect);
  }
 }
   // useEffect(()=>{
@@ -56,7 +51,7 @@ async function handleSubmit(){
             setPassword(e.target.value);
           }}
         />
-        <Button type="submit" variant="outlined" size="medium"className="submit" onClick = {(e)=>{
+        <Button sx={styles.formButton} type="submit" variant="outlined" size="medium"className="submit" onClick = {(e)=>{
           e.preventDefault();
           handleSubmit();
         }
