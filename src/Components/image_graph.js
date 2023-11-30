@@ -13,7 +13,6 @@ export default function ImageOrGraph(props) {
   const [actualMonth, setActualMonth] = useState(new Date().getMonth() + 1);
   const [actualYear, setActualYear] = useState(new Date().getFullYear());
   const [allMonthsData, setAllMonthsData] = useState([]);
-  const [monthRange, setMonthRange] = useState([]);
   const [monthNames, setMonthNames] = useState([]);
   const [incomePerMonth, setIncomePerMonth] = useState([]);
   const [expensePerMonth, setExpensePerMonth] = useState([]);
@@ -33,8 +32,6 @@ export default function ImageOrGraph(props) {
           'rgba(255, 205, 86, 0.2)',
           'rgba(75, 192, 192, 0.2)',
           'rgba(54, 162, 235, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(201, 203, 207, 0.2)'
         ],
         borderColor: [
           'rgb(255, 99, 132)',
@@ -42,8 +39,6 @@ export default function ImageOrGraph(props) {
           'rgb(255, 205, 86)',
           'rgb(75, 192, 192)',
           'rgb(54, 162, 235)',
-          'rgb(153, 102, 255)',
-          'rgb(201, 203, 207)'
         ],
         borderWidth: 1,
       },
@@ -52,6 +47,8 @@ export default function ImageOrGraph(props) {
   };
 
   async function getPeriodTransactions() {
+    const monthRange = [actualMonth, actualMonth - 1, actualMonth - 2, actualMonth - 3, actualMonth - 4];
+
     const promises = monthRange?.map((month) => {
       return new Promise((resolve) => {
         const data = {
@@ -62,7 +59,7 @@ export default function ImageOrGraph(props) {
         request.handle("getBalance", data).then((response) => {
           if (response.success == true) {
             resolve({
-              monthName: new Date(actualYear, month, 1).toLocaleString("default", { month: "long" }),
+              monthName: new Date(actualYear, month - 1, 1).toLocaleString("default", { month: "long" }),
               monthInt: month,
               incomes: response.amountIncomes,
               expenses: response.amountExpenses,
@@ -103,17 +100,16 @@ export default function ImageOrGraph(props) {
   }
 
   useEffect(() => {
-    setMonthRange([actualMonth, actualMonth - 1, actualMonth - 2, actualMonth - 3, actualMonth - 4]);
-  }, [actualDay, actualMonth, actualYear]);
-
-  useEffect(() => {
     getPeriodTransactions();
-  }, [monthRange]);
+  }, [actualDay, actualMonth, actualYear]);
 
   useEffect(() => {
     handleData();
   }, [allMonthsData]);
 
+  // useEffect(() => {
+
+  // }, [balancePerMonth]);
   return (
     <div style={divStyles.graphs}>
       {props.isConnected === false && <img src={logo} style={{ width: "350px", height: "350px" }} />}

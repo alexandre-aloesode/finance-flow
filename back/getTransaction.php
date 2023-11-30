@@ -13,12 +13,12 @@ try {
     $db = new PDO($db, $host, $password);
 
     if (isset($_POST['limit'])) {
-        $limit = (int)$_POST['limit'];
-        $request = $db->prepare('SELECT * from transactions WHERE id_user= :id_user ORDER BY id DESC LIMIT 4');
-        $request->execute([
-            'id_user' => $_POST['id_user'],
-            // 'limit' => 2
-        ]);
+
+        $request = $db->prepare('SELECT * from transactions WHERE id_user= :id_user ORDER BY id DESC LIMIT :limit');
+        $request->bindParam(':id_user', $_POST['id_user'], PDO::PARAM_INT); 
+        $request->bindParam(':limit', $_POST['limit'], PDO::PARAM_INT);
+
+        $request->execute();
     }
     else if (isset($_POST['start_date']) && isset($_POST['end_date'])) {
         $request = $db->prepare('SELECT * from transactions WHERE id_user= :id_user AND date BETWEEN :start_date AND :end_date ORDER BY id DESC');

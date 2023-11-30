@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import ImageOrGraph from "./Components/image_graph";
 import AddTransaction from "./Components/addTransaction";
+import Filters from "./Components/filters";
 import Components from "./Components/style/componentStyle";
 import Containers from "./Components/style/containerStyle";
 import Header from "./Components/nav";
@@ -15,26 +16,21 @@ function App() {
   const [registerForm, setRegisterForm] = useState(false);
   const [loginForm, setLoginForm] = useState(false);
   const [addTransaction, setAddTransaction] = useState(false);
+  const [openFilters, setOpenFilters] = useState(false);
+  const [filters, setFilters] = useState({});
   const styles = Components();
   const divStyles = Containers();
 
-useEffect(()=>{
-  if(localStorage.getItem('token') !== ""){
-    setIsConnected(true);
-  }
-},[isConnected])
+  useEffect(() => {
+    if (localStorage.getItem("token") !== "") {
+      setIsConnected(true);
+    }
+  }, [isConnected]);
 
   return (
     <div style={divStyles.indexContainer}>
-      {addTransaction === false && (
-        <div style={divStyles.appGraphsContainer}>
-        <ImageOrGraph isConnected={isConnected} />
-      </div>
-      )}
       {isConnected === false && !localStorage.getItem("token") && (
-        <div
-          style={divStyles.appCredentialsContainer}
-        >
+        <div style={divStyles.appCredentialsContainer}>
           <Button
             sx={styles.registerButton}
             variant="contained"
@@ -62,16 +58,20 @@ useEffect(()=>{
           >
             Connexion
           </Button>
-          {registerForm === true && <Register connect={setIsConnected} />}
 
+          {registerForm === true && <Register connect={setIsConnected} />}
           {loginForm === true && <Login connect={setIsConnected} />}
         </div>
       )}
-
-      {isConnected === true && addTransaction === false && <Budget addTransaction={setAddTransaction} />}
+      {addTransaction === false && openFilters === false && (
+        <div style={divStyles.appGraphsContainer}>
+          <ImageOrGraph isConnected={isConnected} />
+        </div>
+      )}
+      {isConnected === true && addTransaction === false && openFilters === false && <Budget addTransaction={setAddTransaction} filters={filters}/>}
+      {isConnected === true && addTransaction === false && openFilters === true && <Filters openFilters={setOpenFilters} filters={setFilters}/>}
       {isConnected === true && addTransaction === true && <AddTransaction addTransaction={setAddTransaction} />}
-      {isConnected === true && (<Header connect={setIsConnected} />)}
-
+      {isConnected === true && <Header connect={setIsConnected} openFilters={setOpenFilters} />}
     </div>
   );
 }

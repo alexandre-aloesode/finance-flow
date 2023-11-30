@@ -20,7 +20,7 @@ export default function Containers() {
   }, [width, height]);
 
   const header = {
-    height: "50px",
+    height: height < 800 ? "40px" : "50px",
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -28,12 +28,14 @@ export default function Containers() {
     background: "#353890",
     color: "#fff",
     marginTop: "1rem",
+    position:"fixed",
+    bottom:"0",
   };
 
   const indexContainer = {
     height: "100vh", 
     width: "100vw", 
-    display: "flex", 
+    display: "flex",
     flexDirection: "column", 
     alignItems: "center",
     overflow: "hidden",
@@ -60,7 +62,7 @@ export default function Containers() {
   }
 
   const budgetDiv = {
-    height: "60%",
+    height: "55%",
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -74,18 +76,17 @@ export default function Containers() {
     alignItems: "center", 
     justifyContent: "center",
     position: "relative",
+    top: "0%",
+    // overflowY: "scroll",
   };
 
   const graphs = {
-    // height: "100%",
-    // width: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center", 
     justifyContent: "center",
     padding: "0",
     margin: "0",
-    // position: "relative",
   };
 
   return {

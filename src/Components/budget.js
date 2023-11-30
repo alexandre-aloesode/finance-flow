@@ -1,4 +1,3 @@
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import React from "react";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
@@ -10,6 +9,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import MoneyOffIcon from "@mui/icons-material/MoneyOff";
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import FinanceServices from "../services/getServices";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
@@ -26,11 +26,15 @@ export default function Budget(props) {
   const divStyles = Containers();
   const styles = Components();
   const request = FinanceServices();
+  const [limit, setLimit] = useState(5);
 
+  useEffect(() => {
+    console.log(props.filters);
+  }, [props.filters]);
   async function getBudget() {
     const data = {
       id_user: localStorage.getItem("userId"),
-      limit: 2,
+      limit: limit,
     };
 
     await request.handle("getTransaction", data).then((response) => {
@@ -39,21 +43,18 @@ export default function Budget(props) {
   }
 
   useEffect(() => {
-    if (userBudget.length == 0) {
       getBudget();
-    }
-  }, [userBudget]);
+  }, [limit]);
 
   return (
-    <div style={divStyles.budgetDiv}>
       <div style={divStyles.budgetList}>
-        {window.innerHeight > 800 ? <h2> Dernières transactions </h2> : ""}
+        <h2 style={{position:"absolute", top:"0"}}> Dernières transactions </h2>
         <AddCircleIcon sx={styles.addIcon}
           onClick={() => {
             props.addTransaction(true);
           }}
         />
-        <List>
+        <List sx={{height:"65%", overflowY:"scroll", position:"absolute", top:"11%"}}>
           {userBudget?.map((transaction) => {
             return (
               <ListItem>
@@ -67,10 +68,11 @@ export default function Budget(props) {
             );
           })}
         </List>
-        <Button variant="outlined" size="small" onClick={() => {}}>
+        <Button variant="outlined" sx={{position:"absolute", bottom:"10%"}} size="small" onClick={() => {
+          setLimit(limit + 5);
+        }}>
           Voir plus
         </Button>
       </div>
-    </div>
   );
 }
