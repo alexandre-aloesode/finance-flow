@@ -19,20 +19,19 @@ function App() {
   const divStyles = Containers();
 
 useEffect(()=>{
-  if(localStorage.getItem('token') != ""){
+  if(localStorage.getItem('token') !== ""){
     setIsConnected(true);
   }
 },[isConnected])
 
   return (
     <div style={divStyles.indexContainer}>
-      {isConnected == true && (<Header connect={setIsConnected} />)}
-      {addTransaction == false && (
+      {addTransaction === false && (
         <div style={divStyles.appGraphsContainer}>
         <ImageOrGraph isConnected={isConnected} />
       </div>
       )}
-      {isConnected == false && !localStorage.getItem("token") && (
+      {isConnected === false && !localStorage.getItem("token") && (
         <div
           style={divStyles.appCredentialsContainer}
         >
@@ -42,7 +41,7 @@ useEffect(()=>{
             size="large"
             onClick={() => {
               setRegisterForm((prev) => !prev);
-              if (loginForm == true) {
+              if (loginForm === true) {
                 setLoginForm(false);
               }
             }}
@@ -56,21 +55,23 @@ useEffect(()=>{
             size="large"
             onClick={() => {
               setLoginForm((prev) => !prev);
-              if (registerForm == true) {
+              if (registerForm === true) {
                 setRegisterForm(false);
               }
             }}
           >
             Connexion
           </Button>
-          {registerForm == true && <Register connect={setIsConnected} />}
+          {registerForm === true && <Register connect={setIsConnected} />}
 
-          {loginForm == true && <Login connect={setIsConnected} />}
+          {loginForm === true && <Login connect={setIsConnected} />}
         </div>
       )}
 
       {isConnected === true && addTransaction === false && <Budget addTransaction={setAddTransaction} />}
       {isConnected === true && addTransaction === true && <AddTransaction addTransaction={setAddTransaction} />}
+      {isConnected === true && (<Header connect={setIsConnected} />)}
+
     </div>
   );
 }

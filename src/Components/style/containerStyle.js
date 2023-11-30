@@ -20,13 +20,14 @@ export default function Containers() {
   }, [width, height]);
 
   const header = {
-    height: "10%",
+    height: "50px",
     width: "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     background: "#353890",
     color: "#fff",
+    marginTop: "1rem",
   };
 
   const indexContainer = {
@@ -35,6 +36,7 @@ export default function Containers() {
     display: "flex", 
     flexDirection: "column", 
     alignItems: "center",
+    overflow: "hidden",
   };
 
   const appGraphsContainer = {

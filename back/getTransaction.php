@@ -14,7 +14,7 @@ try {
 
     if (isset($_POST['limit'])) {
         $limit = (int)$_POST['limit'];
-        $request = $db->prepare('SELECT * from transactions WHERE id_user= :id_user ORDER BY id DESC LIMIT 5');
+        $request = $db->prepare('SELECT * from transactions WHERE id_user= :id_user ORDER BY id DESC LIMIT 4');
         $request->execute([
             'id_user' => $_POST['id_user'],
             // 'limit' => 2

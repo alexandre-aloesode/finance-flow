@@ -117,7 +117,7 @@ export default function ImageOrGraph(props) {
   return (
     <div style={divStyles.graphs}>
       {props.isConnected === false && <img src={logo} style={{ width: "350px", height: "350px" }} />}
-      {props.isConnected === true && <h2 style={{ marginTop: "0" }}>Solde: {balance}€</h2>}
+      {props.isConnected === true && <h2 style={{ marginTop: "1rem" }}>Solde: {balance}€</h2>}
       <Bar data={chartData} style={{height:"100%", width:"100%"}} />
     </div>
   );
